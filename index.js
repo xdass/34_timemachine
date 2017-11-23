@@ -1,5 +1,13 @@
-var TIMEOUT_IN_SECS = 3 * 60
-var TEMPLATE = '<h1><span class="js-timer-minutes">00</span>:<span class="js-timer-seconds">00</span></h1>'
+var TIMEOUT_IN_SECS = 15
+var SECOND_TIMEOUT_IN_SECS = 10
+var TEMPLATE = '<h1 style="position: fixed; z-index: 1000;"><span class="js-timer-minutes">00</span>:<span class="js-timer-seconds">00</span></h1>'
+var phrases = [
+  'Всегда стремись быть лучше!',
+  'Между жопой и диваном доллар никогда не пролетит.© Билл Гейтс',
+  'Вы – самый удачливый человек. Запомните это.',
+  'Запомни, если тебе трудно, значит ты идешь по верной дороге, в правильном направлении.',
+  'Чем больше читаешь, тем меньше подражаешь.'
+]
 
 function padZero(number){
   return ("00" + String(number)).slice(-2);
@@ -32,8 +40,12 @@ class Timer{
   reset(timeout_in_secs){
     this.isRunning = false
     this.timestampOnStart = null
+    if (timeout_in_secs) {
+      this.initial_timeout_in_secs = timeout_in_secs
+    }
     this.timeout_in_secs = this.initial_timeout_in_secs
   }
+
   calculateSecsLeft(){
     if (!this.isRunning)
       return this.timeout_in_secs
@@ -79,6 +91,9 @@ class TimerWidget{
   }
 }
 
+function getRnadomPhrase(phrases) {
+  return phrases[Math.floor(Math.random() * phrases.length)];
+}
 
 function main(){
 
@@ -91,6 +106,11 @@ function main(){
   function handleIntervalTick(){
     var secsLeft = timer.calculateSecsLeft()
     timerWiget.update(secsLeft)
+    if (secsLeft === 0) {
+      timer.reset(SECOND_TIMEOUT_IN_SECS)
+      handleVisibilityChange()
+      alert(getRnadomPhrase(phrases))
+    }
   }
 
   function handleVisibilityChange(){
