@@ -1,4 +1,4 @@
-var TIMEOUT_IN_SECS = 3 * 180
+var TIMEOUT_IN_SECS = 3 * 60
 var SECOND_TIMEOUT_IN_MS = 1000 * 30
 var TEMPLATE = '<h1><span class="js-timer-minutes">00</span>:<span class="js-timer-seconds">00</span></h1>'
 var phrases = [
@@ -68,7 +68,7 @@ class TimerWidget{
     // adds HTML tag to current page
     this.timerContainer = document.createElement('div')
 
-    this.timerContainer.setAttribute("style", "line-height: 8px; z-index: 99999; position: fixed; background-color: #376ed447; padding: 5px; border-radius: 5px")
+    this.timerContainer.setAttribute("style", "font-size: 10px; line-height: 8px; z-index: 99999; position: fixed; background-color: #376ed447; padding: 5px; border-radius: 5px")
     this.timerContainer.innerHTML = TEMPLATE
 
     rootTag.insertBefore(this.timerContainer, rootTag.firstChild)
