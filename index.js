@@ -1,6 +1,6 @@
-var TIMEOUT_IN_SECS = 15
-var SECOND_TIMEOUT_IN_SECS = 10
-var TEMPLATE = '<h1 style="position: fixed; z-index: 1000;"><span class="js-timer-minutes">00</span>:<span class="js-timer-seconds">00</span></h1>'
+var TIMEOUT_IN_SECS = 3 * 180
+var SECOND_TIMEOUT_IN_MS = 1000 * 30
+var TEMPLATE = '<h1><span class="js-timer-minutes">00</span>:<span class="js-timer-seconds">00</span></h1>'
 var phrases = [
   'Всегда стремись быть лучше!',
   'Между жопой и диваном доллар никогда не пролетит.© Билл Гейтс',
@@ -68,7 +68,7 @@ class TimerWidget{
     // adds HTML tag to current page
     this.timerContainer = document.createElement('div')
 
-    this.timerContainer.setAttribute("style", "height: 100px;")
+    this.timerContainer.setAttribute("style", "line-height: 8px; z-index: 99999; position: fixed; background-color: #376ed447; padding: 5px; border-radius: 5px")
     this.timerContainer.innerHTML = TEMPLATE
 
     rootTag.insertBefore(this.timerContainer, rootTag.firstChild)
@@ -95,6 +95,10 @@ function getRnadomPhrase(phrases) {
   return phrases[Math.floor(Math.random() * phrases.length)];
 }
 
+function showRandomPhrase() {
+  alert(getRnadomPhrase(phrases))
+}
+
 function main(){
 
   var timer = new Timer(TIMEOUT_IN_SECS)
@@ -107,9 +111,9 @@ function main(){
     var secsLeft = timer.calculateSecsLeft()
     timerWiget.update(secsLeft)
     if (secsLeft === 0) {
-      timer.reset(SECOND_TIMEOUT_IN_SECS)
-      handleVisibilityChange()
-      alert(getRnadomPhrase(phrases))
+      timer.stop()
+      clearInterval(intervalId)
+      setInterval(showRandomPhrase, SECOND_TIMEOUT_IN_MS)
     }
   }
 
