@@ -91,12 +91,12 @@ class TimerWidget{
   }
 }
 
-function getRnadomPhrase(phrases) {
+function getRandomPhrase(phrases) {
   return phrases[Math.floor(Math.random() * phrases.length)];
 }
 
 function showRandomPhrase() {
-  alert(getRnadomPhrase(phrases))
+  alert(getRandomPhrase(phrases))
 }
 
 function main(){
