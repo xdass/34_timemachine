@@ -1,5 +1,5 @@
 var TIMEOUT_IN_SECS = 3 * 60
-var SECOND_TIMEOUT_IN_MS = 1000 * 30
+var SECOND_TIMEOUT_IN_SECS = 30
 var TEMPLATE = '<h1><span class="js-timer-minutes">00</span>:<span class="js-timer-seconds">00</span></h1>'
 var phrases = [
   'Всегда стремись быть лучше!',
@@ -111,9 +111,11 @@ function main(){
     var secsLeft = timer.calculateSecsLeft()
     timerWiget.update(secsLeft)
     if (secsLeft === 0) {
-      timer.stop()
-      clearInterval(intervalId)
-      setInterval(showRandomPhrase, SECOND_TIMEOUT_IN_MS)
+      if (timer.initial_timeout_in_secs === SECOND_TIMEOUT_IN_SECS) {
+        showRandomPhrase()
+      }
+      timer.reset(SECOND_TIMEOUT_IN_SECS)
+      timer.start()
     }
   }
 
